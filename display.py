@@ -17,6 +17,7 @@ class Display:
         flag = '🏁'
         print(f"{tree} {flag}")
         print("1   2   3   4  etc")
-        print(f"p1 has x coins. Bets: 5")
+        print(f"p1 has x coins. Bets: 5      p2 has x coins. Bets: 3")
+        print("p1 - (B)et or (R)oll?")
         
     

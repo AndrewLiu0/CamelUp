@@ -24,7 +24,10 @@ class GameState:
     
     def roll_dice(self, player: int):
         self.player_scores[player] += 1
-        
+    
+    def bet(self, player: int, camel_color: str):
+        pass
+    
         
 
 
