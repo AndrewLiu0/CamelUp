@@ -27,7 +27,9 @@ class GameState:
     
     def bet(self, player: int, camel_color: str):
         pass
-    
+
+    def pay_out(self):
+        pass
         
 
 
