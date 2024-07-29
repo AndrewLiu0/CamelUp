@@ -29,15 +29,21 @@ class Tent:
         ans = ""
         for dice in self.rolls:
             if dice.name == "Green":
-                ans += Back.GREEN + str(dice.number)
+                if dice.number != None:
+                    ans += Back.GREEN + str(dice.number)
             elif dice.name == "Yellow":
-                ans += Back.YELLOW + str(dice.number)
+                if dice.number != None:
+                    ans += Back.YELLOW + str(dice.number)
             elif dice.name == "Red":
-                ans += Back.RED + str(dice.number)
+                if dice.number != None:
+                    ans += Back.RED + str(dice.number)
             elif dice.name == "Blue":
-                ans += Back.BLUE + str(dice.number)
+                if dice.number != None:
+                    ans += Back.BLUE + str(dice.number)
             elif dice.name == "Purple":
-                ans += Back.MAGENTA + str(dice.number)
+                if dice.number != None:
+                    ans += Back.MAGENTA + str(dice.number)
+            ans += Style.RESET_ALL + " "
         return ans
 
 class Dice:

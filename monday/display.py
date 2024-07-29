@@ -16,7 +16,8 @@ class Display:
         self.__camel_up = GameState()
     
     def game_display(self):
-        print(f"Ticket Tents: {self.__camel_up.available_betting_tickets} Dice Tents: {self.__camel_up.tent}")
+        Style.RESET_ALL
+        print(f"Ticket Tents: {self.__camel_up.ticketTentsString()} Dice Tents: {self.__camel_up.tent}")
         tree = '🌴'
         flag = '🏁'
         print(f"{tree} {flag}")
