@@ -1,3 +1,5 @@
+from camel_up import GameState
+
 class Display:
     '''
     Playing state
@@ -8,16 +10,20 @@ class Display:
     p1 has x coins. Bets: y
     p1 - (B)et or (R)oll?
     '''
-    def __init__(self, tickets:dict[str, int], dice:list[int], camel_positions:dict[str, int], player_scores:list[int, int], player_betting_tickets:dict{list, list}):
-        self.tickets = tickets
+    def __init__(self, camel_up:GameState):
+        self.__camel_up = camel_up
     
     def game_display(self):
-        print(f"Ticket Tents: Dice Tents: ")
+        print(f"Ticket Tents: {self.__camel_up.available_betting_tickets} Dice Tents: ")
         tree = '🌴'
         flag = '🏁'
         print(f"{tree} {flag}")
+        print(f"{tree} {flag}")
+        print(f"{tree} {flag}")
+        print(f"{tree} {flag}")
+        print(f"{tree} {flag}")
         print("1   2   3   4  etc")
-        print(f"p1 has x coins. Bets: 5      p2 has x coins. Bets: 3")
-        print("p1 - (B)et or (R)oll?")
+        print(f"p1 has coins. Bets:       p2 has  coins. Bets: ")
+        input = print("p1 - (B)et or (R)oll?")
         
     
