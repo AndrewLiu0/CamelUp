@@ -5,83 +5,69 @@ from colorama import *
 init(autoreset=True)
 
 class GameState:
-    '''TODO
-    
-    Implement Initialization
-    Implement Rolls
-    Implement Bets
-    Implement Scoring System
-
-
-    '''
     def __init__(self):
         #This tells me the types of colors the camels can have.
-        self.colors = ["Green", "Yellow", "Red", "Blue", "Purple"]
+        self.colors = ["green", "yellow", "red", "blue", "purple"]
+        self.colors_short = ["g", "y", "r", "b", "p"]
+
         #This tells me the position each camel is at.
         self.camel_positions = {}
+
         #This tells me what the board looks like.
         self.board_camels = []
         for i in range(16):
             self.board_camels.append([])
+        
         #These are the available betting tickets for each camel.
         self.available_betting_tickets = {}
+
         #These are the betting tickets each player has.
         self.player_betting_tickets = [{}, {}]
-        #These are the player scores.
-        self.player_scores = [0, 0]
-        # even means p1 turn, odd means p2 turn
+
+        #These are starting player scores.
+        self.player_scores = [3, 3]
+
+        # Even means p1 turn, Odd means p2 turn
         self.turn = 0
+
         #These are the camels that still can roll.
         self.taken_rolls = self.colors.copy()
         self.rolls = []
-        #I have no idea what the heck this is. Andrew and Christina will do this.
+
+        #The tent is the pyramid containing the dice
         self.inital_tent = Tent()
         self.tent = Tent()
+        
         #We are initializing the camel positions.
         self.initial_rolls = []
         for i in range(5):
             self.initial_rolls.append(self.inital_tent.roll())
         for roll in self.initial_rolls:
-            self.camel_positions[roll[0]] = roll[1]
-            self.available_betting_tickets[roll[0]] = [5, 3, 2, 2]
-            
+            camel_color = roll[0]
+            camel_position = roll[1]
+            self.camel_positions[camel_color] = camel_position - 1
+            self.available_betting_tickets[camel_color] = [5, 3, 2, 2]
+        
         for color in self.camel_positions:
-            #print("positions", self.camel_positions)
             self.board_camels[self.camel_positions[color]].append(color)
-    
-    # def roll_dice(self, player: int) -> tuple():
-    #     self.player_scores[player] += 1
-    #     camel_color = random.choice(self.taken_rolls)
-    #     self.taken_rolls.remove(camel_color)
     
     def ticketTentsString(self):
         ans = ""
         for ticket in self.available_betting_tickets:
-            if ticket == "Green":
-                if len(self.available_betting_tickets[ticket]) > 0:
-                    ans += Back.GREEN + str((self.available_betting_tickets[ticket])[0])
-                else:
-                    ans += Back.GREEN + "X"
-            elif ticket == "Yellow":
-                if len(self.available_betting_tickets[ticket]) > 0:
-                    ans += Back.YELLOW + str((self.available_betting_tickets[ticket])[0])
-                else:
-                    ans += Back.YELLOW + "X"
-            elif ticket == "Red":
-                if len(self.available_betting_tickets[ticket]) > 0:
-                    ans += Back.RED + str((self.available_betting_tickets[ticket])[0])
-                else:
-                    ans += Back.RED + "X"
-            elif ticket == "Blue":
-                if len(self.available_betting_tickets[ticket]) > 0:
-                    ans += Back.BLUE + str((self.available_betting_tickets[ticket])[0])
-                else:
-                    ans += Back.BLUE + "X"
-            elif ticket == "Purple":
-                if len(self.available_betting_tickets[ticket]) > 0:
-                    ans += Back.MAGENTA + str((self.available_betting_tickets[ticket])[0])
-                else:
-                    ans += Back.MAGENTA + "X"
+            ticket = ticket.lower()
+            length = len(self.available_betting_tickets[ticket])
+            firstCard = str((self.available_betting_tickets[ticket])[0]) if length else None
+            
+            if ticket == "green" or ticket == "g":
+                ans+= Back.GREEN + firstCard if length else Back.GREEN + "X"
+            elif ticket == "yellow" or ticket == "y":
+                ans += Back.YELLOW + firstCard if length else Back.YELLOW + "X"
+            elif ticket == "red" or ticket == "r":
+                ans += Back.RED + firstCard if length else Back.RED + "X"
+            elif ticket == "blue" or ticket == "b":
+                ans += Back.BLUE + firstCard if length else Back.BLUE + "X"
+            elif ticket == "purple" or ticket == "p":
+                ans += Back.MAGENTA + firstCard if length else Back.MAGENTA + "X"
             ans += Style.RESET_ALL + " "
         return ans + Style.RESET_ALL
     

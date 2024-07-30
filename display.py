@@ -17,6 +17,7 @@ class Display:
         self.__camel_up = GameState()
         
     def toColor(self, color, index):
+        color = color.lower()
         empty = "   "
         spaces = "  "
         if index > 9:
@@ -24,15 +25,15 @@ class Display:
             spaces = "   "
         if color == "":
             return empty
-        if color == "Green":
+        if color == "green" or color == "g":
             return Back.GREEN + "g" + Style.RESET_ALL + spaces
-        elif color == "Yellow":
+        elif color == "yellow" or color == "y":
             return Back.YELLOW + "y" + Style.RESET_ALL + spaces
-        elif color == "Red":
+        elif color == "red" or color == "r":
             return Back.RED + "r" + Style.RESET_ALL + spaces
-        elif color == "Blue":
+        elif color == "blue" or color == "b":
             return Back.BLUE + "b" + Style.RESET_ALL + spaces
-        elif color == "Purple":
+        elif color == "purple" or color == "p":
             return Back.MAGENTA + "p" + Style.RESET_ALL + spaces
         
     def printCamels(self, level):
@@ -41,15 +42,16 @@ class Display:
         print(f"{tree}{self.toColor(level[0], 0)}{self.toColor(level[1], 1)}{self.toColor(level[2], 2)}{self.toColor(level[3], 3)}{self.toColor(level[4], 4)}{self.toColor(level[5], 5)}{self.toColor(level[6], 6)}{self.toColor(level[7], 7)}{self.toColor(level[8], 8)}{self.toColor(level[9], 9)}{self.toColor(level[10], 10)}{self.toColor(level[11], 11)}{self.toColor(level[12], 12)}{self.toColor(level[13], 13)}{self.toColor(level[14], 14)}{self.toColor(level[15], 15)}|{flag}")
     
     def betsToColor(self, color, num):
-        if color == "Green":
+        color = color.lower()
+        if color == "green" or color == "g":
             return Back.GREEN + str(num) + Style.RESET_ALL
-        elif color == "Yellow":
+        elif color == "yellow" or color == "y":
             return Back.YELLOW + str(num) + Style.RESET_ALL
-        elif color == "Red":
+        elif color == "red" or color == "r":
             return Back.RED + str(num) + Style.RESET_ALL
-        elif color == "Blue":
+        elif color == "blue" or color == "r":
             return Back.BLUE + str(num) + Style.RESET_ALL
-        elif color == "Purple":
+        elif color == "purple" or color == "p":
             return Back.MAGENTA + str(num) + Style.RESET_ALL
     
     def printBets(self, bets):

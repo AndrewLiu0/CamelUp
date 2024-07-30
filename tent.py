@@ -8,11 +8,11 @@ Used if player chooses to roll the dice
 '''
 class Tent:
     def __init__(self) -> None:
-        green = Dice("Green")
-        yellow = Dice("Yellow")
-        red = Dice("Red")
-        blue = Dice("Blue")
-        purple = Dice("Purple")
+        green = Dice("green")
+        yellow = Dice("yellow")
+        red = Dice("red")
+        blue = Dice("blue")
+        purple = Dice("purple")
         self.dices = [green, yellow, red, blue, purple]
         self.rolls = []
     
@@ -28,28 +28,28 @@ class Tent:
     def __str__(self):
         ans = ""
         for dice in self.rolls:
-            if dice.name == "Green":
+            if dice.name == "green":
                 if dice.number != None:
                     ans += Back.GREEN + str(dice.number)
-            elif dice.name == "Yellow":
+            elif dice.name == "yellow":
                 if dice.number != None:
                     ans += Back.YELLOW + str(dice.number)
-            elif dice.name == "Red":
+            elif dice.name == "red":
                 if dice.number != None:
                     ans += Back.RED + str(dice.number)
-            elif dice.name == "Blue":
+            elif dice.name == "blue":
                 if dice.number != None:
                     ans += Back.BLUE + str(dice.number)
-            elif dice.name == "Purple":
+            elif dice.name == "purple":
                 if dice.number != None:
                     ans += Back.MAGENTA + str(dice.number)
             ans += Style.RESET_ALL + " "
         return ans
 
 class Dice:
-    def __init__(self, name) -> None:
+    def __init__(self, name, number = None) -> None:
         self.name = name
-        self.number = None
+        self.number = number
     def getRandomNumber(self):
         value = random.randint(1,3)
         self.number = value
