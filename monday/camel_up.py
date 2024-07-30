@@ -26,9 +26,11 @@ class GameState:
         #These are the available betting tickets for each camel.
         self.available_betting_tickets = {}
         #These are the betting tickets each player has.
-        self.player_betting_tickets = [[], []]
+        self.player_betting_tickets = [{}, {}]
         #These are the player scores.
         self.player_scores = [0, 0]
+        # even means p1 turn, odd means p2 turn
+        self.turn = 0
         #These are the camels that still can roll.
         self.taken_rolls = self.colors.copy()
         self.rolls = []
@@ -56,27 +58,27 @@ class GameState:
         ans = ""
         for ticket in self.available_betting_tickets:
             if ticket == "Green":
-                if len(ticket) > 0:
+                if len(self.available_betting_tickets[ticket]) > 0:
                     ans += Back.GREEN + str((self.available_betting_tickets[ticket])[0])
                 else:
                     ans += Back.GREEN + "X"
             elif ticket == "Yellow":
-                if len(ticket) > 0:
+                if len(self.available_betting_tickets[ticket]) > 0:
                     ans += Back.YELLOW + str((self.available_betting_tickets[ticket])[0])
                 else:
                     ans += Back.YELLOW + "X"
             elif ticket == "Red":
-                if len(ticket) > 0:
+                if len(self.available_betting_tickets[ticket]) > 0:
                     ans += Back.RED + str((self.available_betting_tickets[ticket])[0])
                 else:
                     ans += Back.RED + "X"
             elif ticket == "Blue":
-                if len(ticket) > 0:
+                if len(self.available_betting_tickets[ticket]) > 0:
                     ans += Back.BLUE + str((self.available_betting_tickets[ticket])[0])
                 else:
                     ans += Back.BLUE + "X"
             elif ticket == "Purple":
-                if len(ticket) > 0:
+                if len(self.available_betting_tickets[ticket]) > 0:
                     ans += Back.MAGENTA + str((self.available_betting_tickets[ticket])[0])
                 else:
                     ans += Back.MAGENTA + "X"
@@ -106,20 +108,57 @@ class GameState:
         Bet updates the gamestate to reflect the bet (e.g. modifies our betting ticket lists).
         Bet returns True if the GameState was successfully updated. Otherwise, it returns false.
         '''
-        betting_tickets = self.player_betting_tickets[player]
-        available_tickets = self.available_betting_tickets[camel_color]
-        print(available_tickets)
-        if(available_tickets):
-            ticket = available_tickets.pop(0)
-            print(available_tickets)
-            betting_tickets.append(ticket)
-            return True
+        if len(self.available_betting_tickets[camel_color]) > 0:
+            if camel_color in self.player_betting_tickets[player]:
+                (self.player_betting_tickets[player])[camel_color].append((self.available_betting_tickets[camel_color]).pop(0))
+                return True
+            else:
+                (self.player_betting_tickets[player])[camel_color] = [(self.available_betting_tickets[camel_color]).pop(0)]
+                return True
         return False
-        
 
     def pay_out(self):
-        pass
-        
-
-
-    
+        p1 = 0
+        p2 = 0
+        first = ""
+        second = ""
+        third = ""
+        fourth = ""
+        fifth = ""
+        for i in range(len(self.board_camels) - 1, 0, -1):
+            while len(self.board_camels[i]) > 0:
+                if first == "":
+                    first = self.board_camels[i].pop()
+                elif second == "":
+                    second = self.board_camels[i].pop()
+                elif third == "":
+                    third = self.board_camels[i].pop()
+                elif fourth == "":
+                    fourth = self.board_camels[i].pop()
+                elif fifth == "":
+                    fifth = self.board_camels[i].pop()
+            if first != "" and second != "" and third != "" and fourth != "" and fifth != "":
+                break
+        for bet in self.player_betting_tickets[0]:
+            if bet == first:
+                for num in (self.player_betting_tickets[0])[bet]:
+                    p1 += num
+            elif bet == second:
+                for num in (self.player_betting_tickets[0])[bet]:
+                    p1 += 1
+            elif bet == third or bet == fourth or bet == fifth:
+                for num in (self.player_betting_tickets[0])[bet]:
+                    p1 -= 1
+        for bet in self.player_betting_tickets[1]:
+            if bet == first:
+                for num in (self.player_betting_tickets[1])[bet]:
+                    p2 += num
+            elif bet == second:
+                for num in (self.player_betting_tickets[1])[bet]:
+                    p2 += 1
+            elif bet == third or bet == fourth or bet == fifth:
+                for num in (self.player_betting_tickets[1])[bet]:
+                    p2 -= 1
+        p1 += self.player_scores[0]
+        p2 += self.player_scores[1]
+        return (p1, p2)
