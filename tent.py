@@ -16,8 +16,15 @@ class Tent:
         self.dices = [green, yellow, red, blue, purple]
         self.rolls = []
     
-    # def roll 
     def roll(self):
+        '''
+        Rolls dice left in the pyramid
+
+        :param none
+        :type none
+        :rtype: tuple(str, int)
+        :return: tuple of the color of dice rolled and number the dice rolled
+        '''
         dice = random.choice(self.dices)
         color = dice.name
         roll = dice.getRandomNumber()
@@ -26,6 +33,14 @@ class Tent:
         return (color, roll)
 
     def __str__(self):
+        '''
+        Converts the dice rolled into a string
+
+        :param none
+        :type none
+        :rtype: str
+        :return: dice rolled as string
+        '''
         ans = ""
         for dice in self.rolls:
             if dice.name == "green":

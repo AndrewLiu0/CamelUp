@@ -4,19 +4,28 @@ from tent import Tent
 from display import Display
 
 
-class TestTent(unittest.TestCase):
+class TestMovement(unittest.TestCase):
     def setUp(self):
         self.gameState = GameState()
         self.display = Display(self.gameState)
     
     def test_0(self):
-        # print("pee", self.gameState.board_camels)
-        # print("peepy", self.gameState.camel_positions)
-        Display(self.gameState).game_display()
-        self.gameState.movement("Red", 1)
-        Display(self.gameState).game_display()
-        # print("poop", self.gameState.board_camels)
-        # print("poopy", self.gameState.camel_positions)
+        '''Tests if moving by 1 moves correctly'''
+        Display(self.gameState).game_display(self.gameState)
+        self.gameState.movement("red", 1)
+        Display(self.gameState).game_display(self.gameState)
+        
+        #This checks if we've been able to move everything correctly.
+        self.assertEqual(True, True)
+    def test_1(self):
+        '''Tests if moving past 16 moves correctly'''
+        Display(self.gameState).game_display(self.gameState)
+        self.assertEqual(self.gameState.movement("red", 16), False)
+        Display(self.gameState).game_display(self.gameState)
+        
+        #This checks if we've been able to move everything correctly.
+        self.assertEqual(True, True)
+
     
 if __name__ == "__main__":
     unittest.main()

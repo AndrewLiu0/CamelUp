@@ -7,9 +7,9 @@ class TestGetBet(unittest.TestCase):
         self.gamestate = GameState()
     
     def test_0(self):
-        curr_size = len(self.gamestate.available_betting_tickets["Purple"])
-        self.gamestate.bet(1, "Purple")
-        updated_size = len(self.gamestate.available_betting_tickets["Purple"])
+        curr_size = len(self.gamestate.available_betting_tickets["purple"])
+        self.gamestate.bet(1, "purple")
+        updated_size = len(self.gamestate.available_betting_tickets["purple"])
         self.assertEqual(curr_size - updated_size, 1)
 
 

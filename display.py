@@ -5,18 +5,18 @@ init(autoreset=True)
 
 class Display:
     '''
-    Playing state
-    End game state
-    Ticket Tents: betting card at the top
-    Dice Tents: what dice was last rolled
-    Display of where camels are
-    p1 has x coins. Bets: y
-    p1 - (B)et or (R)oll?
+    Takes in info from GameState and prints to terminal for user to read
     '''
-    def __init__(self, gameState:GameState):
-        self.__camel_up = GameState()
         
     def toColor(self, color, index):
+        '''
+        Prints the camels out with the first letter of their color and background of their color
+
+        :param: color: camel color, index: position of camel
+        :type: color: str, index: int
+        :rtype: str
+        :return: camel as a string
+        '''
         color = color.lower()
         empty = "   "
         spaces = "  "
@@ -37,11 +37,27 @@ class Display:
             return Back.MAGENTA + "p" + Style.RESET_ALL + spaces
         
     def printCamels(self, level):
+        '''
+        Prints all the camels out according to their board position
+
+        :param: level: tracks camels that are stacked on top of each other
+        :type level: list[str]
+        :rtype: nothing
+        :return: nothing
+        '''
         tree = '🌴'
         flag = '🏁'
         print(f"{tree}{self.toColor(level[0], 0)}{self.toColor(level[1], 1)}{self.toColor(level[2], 2)}{self.toColor(level[3], 3)}{self.toColor(level[4], 4)}{self.toColor(level[5], 5)}{self.toColor(level[6], 6)}{self.toColor(level[7], 7)}{self.toColor(level[8], 8)}{self.toColor(level[9], 9)}{self.toColor(level[10], 10)}{self.toColor(level[11], 11)}{self.toColor(level[12], 12)}{self.toColor(level[13], 13)}{self.toColor(level[14], 14)}{self.toColor(level[15], 15)}|{flag}")
     
     def betsToColor(self, color, num):
+        '''
+        Converts players tickets to how much the ticket was and the color
+
+        :param color: camel color, num: how much the ticket was
+        :type color: str, num: int
+        :rtype: str
+        :return: string of player ticket
+        '''
         color = color.lower()
         if color == "green" or color == "g":
             return Back.GREEN + str(num) + Style.RESET_ALL
@@ -55,6 +71,14 @@ class Display:
             return Back.MAGENTA + str(num) + Style.RESET_ALL
     
     def printBets(self, bets):
+        '''
+        Converts all player bets to string
+
+        :param bets: all the player bets
+        :type bets: list[str]
+        :rtype: str
+        :return: player bets as a string
+        '''
         if bets == None:
             return ""
         
@@ -66,8 +90,18 @@ class Display:
         return ans
     
     def game_display(self, gameState:GameState):
+        '''
+        Main function for display. Prints out tickets, dice tents, camel positions, player scores, and player bets
+
+        :param gameState: current game state
+        :type gameState: GameState
+        :rtype: nothing
+        :return: nothing
+        '''
         Style.RESET_ALL
         print(f"Ticket Tents: {gameState.ticketTentsString()} Dice Tents: {gameState.tent}")
+
+        # calculates stacks of camels
         level1 = [""] * 16
         level2 = [""] * 16
         level3 = [""] * 16
