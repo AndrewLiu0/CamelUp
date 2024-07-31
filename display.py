@@ -20,7 +20,7 @@ class Display:
         color = color.lower()
         empty = "   "
         spaces = "  "
-        if index > 9:
+        if index >= 9:
             empty = "    "
             spaces = "   "
         if color == "":
@@ -92,7 +92,7 @@ class Display:
         self.printCamels(level2)
         self.printCamels(level1)
         print("  1  2  3  4  5  6  7  8  9  10  11  12  13  14  15  16")
-        print(f"p1 has {gameState.player_scores[0]} coins. Bets: {self.printBets(gameState.player_betting_tickets[0])}  \np2 has {gameState.player_scores[1]} coins. Bets: {self.printBets(gameState.player_betting_tickets[1])}")
+        print(f"p1 has {gameState.player_scores[0]} coins. Bets: {self.printBets(gameState.player_betting_tickets[0])}             p2 has {gameState.player_scores[1]} coins. Bets: {self.printBets(gameState.player_betting_tickets[1])}")
     
         
     

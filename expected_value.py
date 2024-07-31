@@ -31,7 +31,7 @@ class ExpectedValue():
             dice.append(die.name)
         color_hash = {"green": 1, "yellow": 2, "red": 3, "blue": 4, "purple": 5}
 
-        print(f'Color Hash: {color_hash}')
+        #print(f'Color Hash: {color_hash}')
         possibilities = {"green": [0.00, 0.00], "yellow": [0.00, 0.00], "red": [0.00, 0.00], "blue": [0.00, 0.00], "purple": [0.00, 0.00]}
         for process in itertools.permutations(dice):
             for i in range(243, 486, 1):
@@ -53,10 +53,12 @@ class ExpectedValue():
         return possibilities
     
     
-    def calculateEv(self, camel: str):
-        pFirst = self.possibilities[camel][0]
-        pSecond = self.possibilities[camel][1]
-        return 5 * pFirst + 1 * pSecond  - 1 * (1 - pFirst - pSecond)
+    def calculateEv(self, camel: str, possibilities):
+        pFirst = possibilities[camel][0]
+        pSecond = possibilities[camel][1]
+        if len(self.gameState.available_betting_tickets[camel]) == 0:
+            return 0 - math.inf
+        return self.gameState.available_betting_tickets[camel][0] * pFirst + 1 * pSecond  - 1 * (1 - pFirst - pSecond)
     
     
     def ternary(self, n):
@@ -94,13 +96,13 @@ class ExpectedValue():
         placements = [first, second, third, fourth, fifth]
         return placements
     
-gameState = GameState()
-gameState.board_camels = [[], ["red", "blue"], [], ["purple", "green"], ["yellow"], [], [], [], [], [], [], [], [], [], [], []]
-gameState.camel_positions = {"blue": 1, "red": 1, "green": 3, "purple": 3, "yellow": 4}
-gameState.tent.dices = [Dice("blue")]
-gameState.tent.rolls = [Dice("red", 1), Dice("purple", 2), Dice("yellow", 3), Dice("green", 2)]
-ev = ExpectedValue(gameState)
-display = Display(gameState)
+# gameState = GameState()
+# gameState.board_camels = [[], ["red", "blue"], [], ["purple", "green"], ["yellow"], [], [], [], [], [], [], [], [], [], [], []]
+# gameState.camel_positions = {"blue": 1, "red": 1, "green": 3, "purple": 3, "yellow": 4}
+# gameState.tent.dices = [Dice("blue")]
+# gameState.tent.rolls = [Dice("red", 1), Dice("purple", 2), Dice("yellow", 3), Dice("green", 2)]
+# ev = ExpectedValue(gameState)
+# display = Display(gameState)
 # display.game_display(gameState)
 # print(ev.calculate())
 # print(ev.calculateEv("yellow"))

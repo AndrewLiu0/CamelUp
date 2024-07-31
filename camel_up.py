@@ -20,6 +20,8 @@ class GameState:
         
         #These are the available betting tickets for each camel.
         self.available_betting_tickets = {}
+        self.overall_winner = []
+        self.overall_loser = []
 
         #These are the betting tickets each player has.
         self.player_betting_tickets = [{}, {}]
@@ -71,7 +73,7 @@ class GameState:
             ans += Style.RESET_ALL + " "
         return ans + Style.RESET_ALL
     
-    def movement(self, camel: str, move_number: int):
+    def movement(self, camel: str, move_number: int) -> bool:
         '''This moves stuff. I have no idea if this is right.
         Ideally this is what the code does:
         It takes the current camel and all the camels on top of the current camel
@@ -79,6 +81,8 @@ class GameState:
         And then it updates their positions.
         '''
         old_position = self.camel_positions[camel]
+        if old_position + move_number > 15:
+            return False
         # print("camels", self.board_camels)
         camels_on_top = self.board_camels[old_position][self.board_camels[old_position].index(camel):].copy()
         next_position = old_position + move_number
@@ -87,6 +91,7 @@ class GameState:
             self.board_camels[old_position].remove(animal)
         for animal in camels_on_top:
             self.camel_positions[animal] = next_position
+        return True
 
     def bet(self, player: int, camel_color: str) -> bool:
         '''
@@ -102,6 +107,14 @@ class GameState:
                 (self.player_betting_tickets[player])[camel_color] = [(self.available_betting_tickets[camel_color]).pop(0)]
                 return True
         return False
+    
+    def overall(self, player, camel_color, pos):
+        # pos 0 = winner
+        # pos 1 = loser
+        if pos == 0:
+            self.overall_winner.append((player, camel_color))
+        else:
+            self.overall_loser.append((player, camel_color))
 
     def pay_out(self):
         p1 = 0
